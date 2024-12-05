@@ -7,22 +7,23 @@ sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
-    jcenter() // for payload_writer
+    maven { url 'https://maven.aliyun.com/repository/jcenter' }
 }
 
 dependencies {
-    compile fileTree(dir: 'lib', include: ['*.jar'])
-    compile 'org.slf4j:slf4j-api:1.7.30'
-    compile 'com.meituan.android.walle:payload_writer:1.1.7'
-    compile 'org.json:json:20231013'
-    compile 'org.slf4j:slf4j-simple:1.7.30'
-    compile 'com.intellij:forms_rt:7.0.3'
+    implementation fileTree(dir: 'lib', include: ['*.jar'])
+    implementation 'org.slf4j:slf4j-api:1.7.30'
+    implementation 'com.meituan.android.walle:payload_writer:1.1.7'
+    implementation 'org.json:json:20231013'
+    implementation 'org.slf4j:slf4j-simple:1.7.30'
+    implementation 'com.intellij:forms_rt:7.0.3'
 }
 
-task fatJar(type: Jar, dependsOn: jar) {
-    baseName = 'dx-signer'
+tasks.register('fatJar', Jar) {
+    dependsOn jar
+    archiveBaseName.convention('dx-signer')
 
-    def deps = configurations.runtime
+    def deps = configurations.runtimeClasspath
 
     def depClasses = { deps.collect { it.isDirectory() ? it : zipTree(it) } }
 

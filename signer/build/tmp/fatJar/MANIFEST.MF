@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Implementation-Title: dx signer
+Main-Class: dx.signer.UX
+
